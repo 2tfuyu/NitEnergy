@@ -7,7 +7,7 @@ use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase implements Listener
 {
-    public function onEnable() :void
+    public function onEnable(): void
     {
     }
 }
