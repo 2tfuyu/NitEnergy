@@ -2,30 +2,18 @@
 
 namespace NitEnergy\provider;
 
-use pocketmine\Player;
+use NitEnergy\Main;
+use pocketmine\utils\Config;
 
-interface Provider
+abstract class Provider
 {
 
-    /**
-     * Create file.
-     */
-    public function open(): void;
+    private $config;
+    private $data;
 
-    /**
-     * @param Player $player
-     * @return bool
-     * Check the account existence.
-     */
-    public function existsAccount(Player $player): bool;
-
-    /**
-     * @param Player $player
-     */
-    public function createAccount(Player $player): void;
-
-    /**
-     * @param Player $player
-     */
-    public function removeAccount(Player $player): void;
+    public function __construct(string $name, array $input_data)
+    {
+        $this->config = new Config(Main::getInstance()->getDataFolder() . $name, Config::YAML, $input_data);
+        $data = $this->
+    }
 }
