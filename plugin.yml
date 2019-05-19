@@ -1,0 +1,6 @@
+main: NitEnergy\Main
+name: NitEnergy
+version: 0.1
+api: 3.0.0
+author: 2tf
+website: https://github.com/nitf/NitEnergy
