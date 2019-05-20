@@ -25,11 +25,17 @@ class Main extends PluginBase implements Listener
         }
     }
 
+    /**
+     * @return string
+     */
     public static function getPath(): string
     {
         return self::$path;
     }
 
+    /**
+     * @return TaskScheduler
+     */
     public static function _getScheduler(): TaskScheduler
     {
         return self::$scheduler;
