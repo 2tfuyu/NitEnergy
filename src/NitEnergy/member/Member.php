@@ -10,6 +10,7 @@ class Member
     /** @var Player  */
     private $player;
 
+    /** @var string */
     private $team;
 
     public function __construct(Player $player)
