@@ -6,14 +6,23 @@ use NitEnergy\game\Game;
 use NitEnergy\game\gamelib\GameLib;
 use NitEnergy\Main;
 use NitEnergy\member\Member;
+use NitEnergy\provider\Provider;
 use pocketmine\Player;
 use pocketmine\scheduler\ClosureTask;
 
-class Debug implements Game
+class Debug extends Provider implements Game
 {
 
+    /** @var string  */
+    const FILE_PATH = "%DATA_PATH%/Debug";
+
+    /** @var string  */
+    const FILE_NAME = "Debug.yml";
+
+    /** @var float|int  */
     const TIME = 60 * 5;
 
+    /** @var array  */
     const TEAM = [
         "RED",
         "BLUE"
@@ -30,6 +39,7 @@ class Debug implements Game
 
     public function __construct()
     {
+        parent::__construct(self::FILE_PATH, self::FILE_NAME, null);
         foreach (self::TEAM as $team)
         {
             $this->teams[$team] = [];
