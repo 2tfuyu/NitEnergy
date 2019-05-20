@@ -5,6 +5,11 @@ namespace NitEnergy\game\gamelib;
 class GameLib
 {
 
+    /**
+     * @param string $message
+     * @param array $teams
+     * Send message to All Team`s member.
+     */
     public static function sendMessageToTeams(string $message, array $teams): void
     {
         foreach ($teams as $team)
@@ -16,6 +21,11 @@ class GameLib
         }
     }
 
+    /**
+     * @param string $message
+     * @param array $team
+     * Send message to a Team`s member.
+     */
     public static function sendMessageToTeam(string $message, array $team): void
     {
         foreach ($team as $member)
@@ -24,6 +34,12 @@ class GameLib
         }
     }
 
+    /**
+     * @param array $members
+     * @param array $team
+     * @return array
+     * Shuffle member.
+     */
     public static function randomTeam(array $members, array $team): array
     {
         shuffle($members);
