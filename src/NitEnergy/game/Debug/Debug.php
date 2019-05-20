@@ -19,8 +19,14 @@ class Debug extends Provider implements Game
     /** @var string  */
     const FILE_NAME = "Debug.yml";
 
+    /** @var string  */
+    const GAME_NAME = "Debug";
+
     /** @var float|int  */
-    const TIME = 60 * 5;
+    const GAME_TIME = 60 * 5;
+
+    /** @var float|int  */
+    const WAIT_TIME = 60 * 1;
 
     /** @var array  */
     const TEAM = [
@@ -59,7 +65,7 @@ class Debug extends Provider implements Game
                 }
                 $this->start();
             }
-        ), 20 * 60);
+        ), 20 * self::WAIT_TIME);
     }
 
     public function timerTask(): void
@@ -69,7 +75,7 @@ class Debug extends Provider implements Game
             {
                 $this->finish();
             }
-        ), 20 * self::TIME);
+        ), 20 * self::GAME_TIME);
     }
 
     public function isStarted(): bool
@@ -82,22 +88,33 @@ class Debug extends Provider implements Game
         $this->members[$player->getName()] = new Member($player);
     }
 
+    public function removePlayer(Player $player): void
+    {
+        unset($this->members[$player->getName()]);
+    }
+
     public function start(): void
     {
         $this->isStarted = true;
         $this->timerTask();
-
         $this->randomTeam();
+
+        foreach ($this->members as $member)
+        {
+            $message = "You are " . $member->getTeam();
+            GameLib::sendMessageToMember($message, $member);
+        }
     }
 
     public function finish(): void
     {
         $this->isStarted = false;
+
     }
 
     public function getName(): string
     {
-        return "Debug";
+        return self::GAME_NAME;
     }
 
     public function randomTeam(): void
