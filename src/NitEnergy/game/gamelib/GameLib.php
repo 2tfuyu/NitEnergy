@@ -2,6 +2,8 @@
 
 namespace NitEnergy\game\gamelib;
 
+use NitEnergy\member\Member;
+
 class GameLib
 {
 
@@ -34,6 +36,11 @@ class GameLib
         }
     }
 
+    public static function sendMessageToMember(string $message, Member $member): void
+    {
+        $member->getPlayer()->sendMessage($message);
+    }
+
     /**
      * @param array $members
      * @param array $team
@@ -57,5 +64,31 @@ class GameLib
             $i++;
         }
         return $teams;
+    }
+
+    /**
+     * @param array $teams
+     * @return string
+     * Check the most biggest kill count.
+     */
+    public static function getKillWinnerTeam(array $teams): string
+    {
+        $kills = [];
+        foreach ($teams as $team)
+        {
+            foreach ($team as $member)
+            {
+                $kills[key($team)] += $member->getKill();
+            }
+        }
+
+        sort($kills, SORT_ASC);
+        $tmp = [];
+        foreach ($kills as $kill)
+        {
+            $tmp[] = $kill;
+        }
+
+        return $tmp[0];
     }
 }
