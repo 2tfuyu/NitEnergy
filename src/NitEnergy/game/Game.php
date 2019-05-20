@@ -21,6 +21,8 @@ interface Game
      */
     public function addPlayer(Player $player): void;
 
+    public function removePlayer(Player $player): void;
+
     public function start(): void;
 
     public function finish(): void;
