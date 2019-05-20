@@ -14,9 +14,10 @@ abstract class Provider
     /** @var array  */
     private $data;
 
-    public function __construct(string $name, array $inputData)
+    public function __construct(string $path, string $name, ?array $inputData)
     {
-        $this->config = new Config(Main::getPath() . $name, Config::YAML, $inputData);
+        $path = replace("%DATA_PATH%", Main::getPath(), $path);
+        $this->config = new Config($path . $name, Config::YAML, $inputData);
         $this->data = $this->config->getAll(true);
     }
 
