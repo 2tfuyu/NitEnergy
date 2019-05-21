@@ -2,6 +2,7 @@
 
 namespace NitEnergy;
 
+use NitEnergy\event\JoinEvent;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\TaskScheduler;
@@ -23,6 +24,8 @@ class Main extends PluginBase implements Listener
         {
             @mkdir(self::$path);
         }
+
+        new JoinEvent($this);
     }
 
     /**
