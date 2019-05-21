@@ -28,7 +28,7 @@ class EnergyCommand extends Command
      * @return mixed
      * @throws CommandException
      */
-    public function execute(CommandSender $sender, string $commandLabel, array $args)
+    public function execute(CommandSender $sender, string $commandLabel, array $args) :bool
     {
         $config = new SystemDB(self::FILE_PATH, self::FILE_NAME, null);
         $this->config = $config;
@@ -44,14 +44,15 @@ class EnergyCommand extends Command
                     $message .= "\n";
                 }
                 $sender->sendMessage($message);
-                break;
+                return true;
             case "select":
                 if ($args[1] === null) break;
 
                 $game = GameHandler::getGame($args[1]);
                 if ($game === null) break;
                 $game->addPlayer($sender);
-                break;
+                return true;
         }
+        return false;
     }
 }
