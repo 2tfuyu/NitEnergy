@@ -38,7 +38,7 @@ class GameHandler
      * @param string $name
      * @return Game
      */
-    public static function getGame(string $name): Game
+    public static function getGame(string $name): ?Game
     {
         return self::$games[$name];
     }
