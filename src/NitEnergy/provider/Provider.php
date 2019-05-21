@@ -21,21 +21,36 @@ abstract class Provider
         $this->data = $this->config->getAll(true);
     }
 
+    /**
+     * @param string $key
+     * @param array $inputData
+     */
     public function set(string $key, array $inputData): void
     {
         $this->data[$key] = $inputData;
     }
 
+    /**
+     * @param string $key
+     * @return array
+     */
     public function get(string $key): array
     {
         return $this->data[$key];
     }
 
+    /**
+     * @param string $key
+     */
     public function remove(string $key): void
     {
         unset($this->data[$key]);
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function exists(string $key): bool
     {
         return isset($this->data[$key]);
