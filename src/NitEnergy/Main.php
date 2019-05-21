@@ -25,7 +25,7 @@ class Main extends PluginBase implements Listener
             @mkdir(self::$path);
         }
 
-        new JoinEvent($this);
+        (new JoinEvent($this));
     }
 
     /**
