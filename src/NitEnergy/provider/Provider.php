@@ -16,7 +16,7 @@ abstract class Provider
 
     public function __construct(string $path, string $name, ?array $inputData)
     {
-        $path = replace("%DATA_PATH%", Main::getPath(), $path);
+        $path = str_replace("%DATA_PATH%", Main::getPath(), $path);
         $this->config = new Config($path . $name, Config::YAML, $inputData);
         $this->data = $this->config->getAll(true);
     }
@@ -24,6 +24,21 @@ abstract class Provider
     public function set(string $key, array $inputData): void
     {
         $this->data[$key] = $inputData;
+    }
+
+    public function get(string $key): array
+    {
+        return $this->data[$key];
+    }
+
+    public function remove(string $key): void
+    {
+        unset($this->data[$key]);
+    }
+
+    public function exists(string $key): bool
+    {
+        return isset($this->data[$key]);
     }
 
     public function save(): void
