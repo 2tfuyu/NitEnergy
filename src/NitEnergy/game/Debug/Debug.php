@@ -60,7 +60,7 @@ class Debug extends Provider implements Game
             {
                 if (count($this->members) < count(self::TEAM))
                 {
-                    $this->task();
+                    $this->waitTask();
                     return;
                 }
                 $this->start();
