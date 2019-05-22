@@ -19,10 +19,9 @@ class JoinEvent extends Provider implements Listener, PlayerData
     /** @var string  */
     const FILE_NAME = "Player.yml";
 
-    public function __construct(Main $plugin)
+    public function __construct()
     {
         parent::__construct(self::FILE_PATH, self::FILE_NAME, null);
-        Server::getInstance()->getPluginManager()->registerEvents($this, $plugin);
     }
 
     public function onJoin(PlayerJoinEvent $e): void
