@@ -6,6 +6,7 @@ use NitEnergy\event\JoinEvent;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\TaskScheduler;
+use pocketmine\Server;
 
 class Main extends PluginBase implements Listener
 {
@@ -25,7 +26,13 @@ class Main extends PluginBase implements Listener
             @mkdir(self::$path);
         }
 
-        (new JoinEvent($this));
+        $listeners = [
+            new JoinEvent()
+        ];
+        $server = Server::getInstance();
+        foreach ($listeners as $listener){
+            $server->getPluginManager()->registerEvents($listener, $this);
+        }
     }
 
     /**
