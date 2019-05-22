@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e00968a-3bad-4dc9-aa2c-363640a7dc64" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/NitEnergy/Main.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NitEnergy/Main.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/NitEnergy/member/MemberHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NitEnergy/command/EnergyCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NitEnergy/command/EnergyCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NitEnergy/provider/Provider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NitEnergy/provider/Provider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NitEnergy/command/SystemDB.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NitEnergy/command/SystemDB.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NitEnergy/game/Debug/Debug.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NitEnergy/game/Debug/Debug.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NitEnergy/game/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NitEnergy/game/Game.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NitEnergy/member/Member.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/NitEnergy/member/Member.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,18 +21,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/NitEnergy/Main.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="45" column="1" lean-forward="true" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
-              <folding>
-                <element signature="e#29#59#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NitEnergy/event/JoinEvent.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -50,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NitEnergy/game/Debug/Debug.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-117">
-              <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+            <state relative-caret-position="239">
+              <caret line="90" column="7" lean-forward="true" selection-start-line="90" selection-start-column="7" selection-end-line="90" selection-end-column="7" />
               <folding>
                 <element signature="e#40#64#0#PHP" expanded="true" />
               </folding>
@@ -71,17 +63,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NitEnergy/member/Member.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            <state relative-caret-position="334">
+              <caret line="77" column="21" selection-start-line="77" selection-start-column="21" selection-end-line="77" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NitEnergy/member/MemberHandler.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="430">
+              <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NitEnergy/command/EnergyCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
+            <state relative-caret-position="1292">
+              <caret line="76" column="17" lean-forward="true" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
               <folding>
                 <element signature="e#37#68#0#PHP" expanded="true" />
               </folding>
@@ -89,11 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NitEnergy/command/SystemDB.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            <state relative-caret-position="493">
+              <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -102,7 +103,6 @@
         <entry file="file://$PROJECT_DIR$/src/NitEnergy/provider/Provider.php">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret lean-forward="true" />
               <folding>
                 <element signature="e#38#57#0#PHP" expanded="true" />
               </folding>
@@ -113,8 +113,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NitEnergy/game/Game.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+            <state relative-caret-position="442">
+              <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -130,23 +130,24 @@
         <option value="$PROJECT_DIR$/plugin.yml" />
         <option value="$PROJECT_DIR$/src/NitEnergy/game/Debug.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/task/TaskManager.php" />
-        <option value="$PROJECT_DIR$/src/NitEnergy/member/Member.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/game/gamelib/GameLib.php" />
-        <option value="$PROJECT_DIR$/src/NitEnergy/game/Game.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/event/PlayerJoinEvent.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/event/JoinEvent.php" />
-        <option value="$PROJECT_DIR$/src/NitEnergy/game/Debug/Debug.php" />
-        <option value="$PROJECT_DIR$/src/NitEnergy/command/SystemDB.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/game/GameHandler.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/Main.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/provider/Provider.php" />
+        <option value="$PROJECT_DIR$/src/NitEnergy/game/Game.php" />
+        <option value="$PROJECT_DIR$/src/NitEnergy/game/Debug/Debug.php" />
         <option value="$PROJECT_DIR$/src/NitEnergy/command/EnergyCommand.php" />
+        <option value="$PROJECT_DIR$/src/NitEnergy/member/MemberHandler.php" />
+        <option value="$PROJECT_DIR$/src/NitEnergy/member/Member.php" />
+        <option value="$PROJECT_DIR$/src/NitEnergy/command/SystemDB.php" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="285" />
-    <option name="y" value="514" />
+    <option name="y" value="513" />
     <option name="width" value="1440" />
     <option name="height" value="810" />
   </component>
@@ -173,6 +174,13 @@
               <item name="NitEnergy" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="NitEnergy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NitEnergy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NitEnergy" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="NitEnergy" type="462c0819:PsiDirectoryNode" />
+              <item name="command" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="NitEnergy" type="b2602c69:ProjectViewProjectNode" />
@@ -254,18 +262,19 @@
       <workItem from="1558245109423" duration="752000" />
       <workItem from="1558247134903" duration="16738000" />
       <workItem from="1558323202443" duration="10631000" />
-      <workItem from="1558409418680" duration="5787000" />
+      <workItem from="1558409418680" duration="5888000" />
+      <workItem from="1558482369021" duration="3664000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33908000" />
+    <option name="totallyTimeSpent" value="37673000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="735" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2574899" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2574899" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -327,41 +336,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NitEnergy/game/gamelib/GameLib.php">
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/event/PlayerJoinEvent.php" />
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/Main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="83" selection-start-line="83" selection-end-line="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NitEnergy/event/PlayerJoinEvent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="22" column="68" selection-start-line="22" selection-start-column="68" selection-end-line="22" selection-end-column="68" />
+        <state relative-caret-position="714">
+          <caret line="45" column="1" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
           <folding>
-            <element signature="e#35#54#0#PHP" expanded="true" />
+            <element signature="e#29#59#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NitEnergy/member/Member.php">
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/provider/Provider.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NitEnergy/game/Game.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NitEnergy/command/SystemDB.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        <state>
+          <folding>
+            <element signature="e#38#57#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -379,43 +370,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/NitEnergy/Main.php">
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/game/Game.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="45" column="1" lean-forward="true" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
-          <folding>
-            <element signature="e#29#59#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/NitEnergy/provider/Provider.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-          <folding>
-            <element signature="e#38#57#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="442">
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NitEnergy/game/Debug/Debug.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-117">
-          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        <state relative-caret-position="239">
+          <caret line="90" column="7" lean-forward="true" selection-start-line="90" selection-start-column="7" selection-end-line="90" selection-end-column="7" />
           <folding>
             <element signature="e#40#64#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/game/gamelib/GameLib.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/member/MemberHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/member/Member.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="77" column="21" selection-start-line="77" selection-start-column="21" selection-end-line="77" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/NitEnergy/command/EnergyCommand.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
+        <state relative-caret-position="1292">
+          <caret line="76" column="17" lean-forward="true" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
           <folding>
             <element signature="e#37#68#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NitEnergy/command/SystemDB.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
         </state>
       </provider>
     </entry>

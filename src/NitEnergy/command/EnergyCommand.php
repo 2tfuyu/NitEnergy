@@ -3,10 +3,11 @@
 namespace NitEnergy\command;
 
 use NitEnergy\game\GameHandler;
-use NitEnergy\member\Member;
+use NitEnergy\member\MemberHandler;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\CommandException;
+use pocketmine\Player;
 
 class EnergyCommand extends Command
 {
@@ -33,6 +34,8 @@ class EnergyCommand extends Command
         $config = new SystemDB(self::FILE_PATH, self::FILE_NAME, null);
         $this->config = $config;
 
+        if (!$sender instanceof Player) return false;
+
         switch ($args[0])
         {
             case "gamelist":
@@ -50,7 +53,28 @@ class EnergyCommand extends Command
 
                 $game = GameHandler::getGame($args[1]);
                 if ($game === null) break;
-                $game->addPlayer($sender);
+                if (!$game->addPlayer($sender))
+                {
+                    $sender->sendMessage("This game has already started.");
+                }
+                else
+                {
+                    $sender->sendMessage("You are joined.");
+                }
+                return true;
+            case "cancel":
+                $member = MemberHandler::getMember($sender->getName());
+                if ($member === null) return false;
+                $game_name = $member->getGameName();
+                $game = GameHandler::getGame($game_name);
+                if ($game->removePlayer($member->getPlayer()))
+                {
+                    $sender->sendMessage("You are left this game.");
+                }
+                else
+                {
+                    $sender->sendMessage("You are not joined this game.");
+                }
                 return true;
         }
         return false;
