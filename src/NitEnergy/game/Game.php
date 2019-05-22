@@ -18,10 +18,15 @@ interface Game
 
     /**
      * @param Player $player
+     * @return bool
      */
-    public function addPlayer(Player $player): void;
+    public function addPlayer(Player $player): bool;
 
-    public function removePlayer(Player $player): void;
+    /**
+     * @param Player $player
+     * @return bool
+     */
+    public function removePlayer(Player $player): bool;
 
     public function start(): void;
 
