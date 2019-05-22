@@ -9,12 +9,18 @@ use NitEnergy\Main;
 use NitEnergy\member\Member;
 use NitEnergy\member\MemberHandler;
 use NitEnergy\provider\Provider;
+use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\event\Event;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\Player;
 use pocketmine\scheduler\ClosureTask;
+use pocketmine\Server;
 
-class Debug extends Provider implements Game
+class Debug extends Provider implements Game, Listener
 {
-
+    
     /** @var string  */
     const FILE_PATH = "%DATA_PATH%/Debug";
 
@@ -45,8 +51,9 @@ class Debug extends Provider implements Game
     /** @var array  */
     private $teams = [];
 
-    public function __construct()
+    public function __construct(Main $plugin)
     {
+        Server::getInstance()->getPluginManager()->registerEvents($this, $plugin);
         parent::__construct(self::FILE_PATH, self::FILE_NAME, null);
         foreach (self::TEAM as $team)
         {
@@ -101,6 +108,10 @@ class Debug extends Provider implements Game
         return true;
     }
 
+    /**
+     * @param Player $player
+     * @return bool
+     */
     public function removePlayer(Player $player): bool
     {
         if ($this->isStarted) {
@@ -108,6 +119,71 @@ class Debug extends Provider implements Game
         }
         unset($this->members[$player->getName()]);
         return true;
+    }
+
+    /**
+     * @param Player $player
+     * @return bool
+     */
+    public function existsPlayer(Player $player): bool
+    {
+        return isset($this->members[$player->getName()]);
+    }
+
+    /**
+     * @param Event $e
+     */
+    public function onEvent(Event $e): void
+    {
+        /** @var array $events */
+        $events = [];
+        $events["PlayerDeathEvent"] = function (PlayerDeathEvent $e): void
+        {
+            $player = $e->getPlayer();
+            if ($this->existsPlayer($player))
+            {
+                $playerMember = MemberHandler::getMember($player);
+                $damageCause = $player->getLastDamageCause();
+                if (!$damageCause instanceof EntityDamageByEntityEvent)
+                {
+                    $playerMember->respawn();
+                    return;
+                }
+                $damager = $damageCause->getDamager();
+                $damagerMember = ($damager instanceof Player) ? MemberHandler::getMember($damager) : null;
+                if ($damagerMember === null) return;
+
+                $playerMember->addDeath();
+                $playerMember->respawn();
+                $damagerMember->addKill();
+            }
+        };
+
+        $events["EntityDamageEvent"] = function (EntityDamageEvent $e): void
+        {
+            $entity = $e->getEntity();
+            if ($entity instanceof Player)
+            {
+                $player = $entity;
+                if ($this->existsPlayer($player))
+                {
+                    $playerMember = MemberHandler::getMember($player);
+                    if (!$e instanceof EntityDamageByEntityEvent) return;
+
+                    $damager = $e->getDamager();
+                    if ($damager instanceof Player) return;
+
+                    $damagerMember = MemberHandler::getMember($damager);
+                    if ($playerMember->getTeam() === $damagerMember->getTeam())
+                    {
+                        $e->setCancelled();
+                        return;
+                    }
+                }
+            }
+        };
+
+        $events[$e->getEventName()]($e);
     }
 
     public function start(): void
