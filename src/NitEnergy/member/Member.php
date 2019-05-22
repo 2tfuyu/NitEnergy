@@ -19,6 +19,9 @@ class Member
     /** @var int */
     private $death;
 
+    /** @var string */
+    private $gameName;
+
     public function __construct(Player $player)
     {
         $this->player = $player;
@@ -61,6 +64,22 @@ class Member
     public function getDeath(): int
     {
         return $this->death;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setGameName(string $name): void
+    {
+        $this->gameName = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGameName(): string
+    {
+        return $this->gameName;
     }
 
     /**
