@@ -27,6 +27,14 @@ class Member
         $this->player = $player;
     }
 
+    public function respawn(): void
+    {
+        // Gameのセッティングデータからリスポーン座標を取得する
+    }
+
+    /**
+     * @param string $name
+     */
     public function setTeam(string $name): void
     {
         $this->team = $name;
