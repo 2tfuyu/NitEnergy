@@ -3,9 +3,11 @@
 namespace NitEnergy\game\Debug;
 
 use NitEnergy\game\Game;
+use NitEnergy\game\GameHandler;
 use NitEnergy\game\gamelib\GameLib;
 use NitEnergy\Main;
 use NitEnergy\member\Member;
+use NitEnergy\member\MemberHandler;
 use NitEnergy\provider\Provider;
 use pocketmine\Player;
 use pocketmine\scheduler\ClosureTask;
@@ -83,14 +85,29 @@ class Debug extends Provider implements Game
         return $this->isStarted;
     }
 
-    public function addPlayer(Player $player): void
+    /**
+     * @param Player $player
+     * @return bool
+     */
+    public function addPlayer(Player $player): bool
     {
-        $this->members[$player->getName()] = new Member($player);
+        if ($this->isStarted) {
+            return false;
+        }
+        $member = new Member($player);
+        $member->setGameName($this->getName());
+        MemberHandler::addMember($member);
+        $this->members[$player->getName()] = $member;
+        return true;
     }
 
-    public function removePlayer(Player $player): void
+    public function removePlayer(Player $player): bool
     {
+        if ($this->isStarted) {
+            return false;
+        }
         unset($this->members[$player->getName()]);
+        return true;
     }
 
     public function start(): void
