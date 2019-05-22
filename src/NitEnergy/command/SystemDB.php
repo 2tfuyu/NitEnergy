@@ -28,4 +28,13 @@ class SystemDB extends Provider
     {
         parent::set($key, $input_data);
     }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function exists(string $key): bool
+    {
+        return parent::exists($key);
+    }
 }
