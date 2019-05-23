@@ -3,6 +3,8 @@
 namespace NitEnergy;
 
 use NitEnergy\event\JoinEvent;
+use NitEnergy\game\Debug\Debug;
+use NitEnergy\game\GameHandler;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\TaskScheduler;
@@ -20,18 +22,23 @@ class Main extends PluginBase implements Listener
     {
         self::$path = $this->getDataFolder();
         self::$scheduler = $this->getScheduler();
-
         if (!file_exists(self::$path))
         {
             @mkdir(self::$path);
         }
-
         $listeners = [
             new JoinEvent()
         ];
         $server = Server::getInstance();
         foreach ($listeners as $listener){
             $server->getPluginManager()->registerEvents($listener, $this);
+        }
+        $games = [
+            "Debug" => Debug::class
+        ];
+        foreach ($games as $gameName => $path)
+        {
+            GameHandler::registerGame($gameName, $path);
         }
     }
 
