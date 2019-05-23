@@ -47,8 +47,7 @@ class EnergyCommand extends Command
             case "gamelist":
                 $games = GameHandler::getGames();
                 $message = "";
-                foreach ($games as $game)
-                {
+                foreach ($games as $game) {
                     $message .= key($game);
                     $message .= "\n";
                 }
@@ -59,12 +58,11 @@ class EnergyCommand extends Command
 
                 $game = GameHandler::getGame($args[1]);
                 if ($game === null) break;
-                if (!$game->addPlayer($sender))
-                {
+
+                if (!$game->addPlayer($sender)) {
                     $sender->sendMessage("This game has already started.");
                 }
-                else
-                {
+                else {
                     $sender->sendMessage("You are joined.");
                 }
                 return true;
@@ -73,12 +71,10 @@ class EnergyCommand extends Command
                 if ($member === null) return false;
                 $game_name = $member->getGameName();
                 $game = GameHandler::getGame($game_name);
-                if ($game->removePlayer($member->getPlayer()))
-                {
+                if ($game->removePlayer($member->getPlayer())) {
                     $sender->sendMessage("You are left this game.");
                 }
-                else
-                {
+                else {
                     $sender->sendMessage("You are not joined this game.");
                 }
                 return true;
