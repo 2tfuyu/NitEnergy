@@ -4,6 +4,7 @@ namespace NitEnergy\command;
 
 use NitEnergy\game\GameHandler;
 use NitEnergy\member\MemberHandler;
+use NitEnergy\provider\SystemDB;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\CommandException;
@@ -20,6 +21,11 @@ class EnergyCommand extends Command
 
     /** @var SystemDB */
     private $config;
+
+    public function __construct()
+    {
+        parent::__construct("nitenergy", "NitEnergy", "/nitenergy");
+    }
 
     /**
      * @param CommandSender $sender
