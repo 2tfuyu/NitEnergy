@@ -17,7 +17,7 @@ abstract class Provider
     public function __construct(string $path, string $name, ?array $inputData)
     {
         $path = str_replace("%DATA_PATH%", Main::getPath(), $path);
-        $this->config = new Config($path . $name, Config::YAML, $inputData);
+        $this->config = new Config($path . $name, Config::YAML, !empty($inputData) ? $inputData : []);
         $this->data = $this->config->getAll(true);
     }
 
