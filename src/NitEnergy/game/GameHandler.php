@@ -61,7 +61,7 @@ class GameHandler
      */
     public static function getGame(string $name): ?Game
     {
-        return self::$games[$name];
+        return self::$games[$name] ?? null;
     }
 
     public static function getGameList(): array
