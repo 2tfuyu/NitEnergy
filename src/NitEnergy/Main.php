@@ -2,6 +2,7 @@
 
 namespace NitEnergy;
 
+use NitEnergy\command\EnergyCommand;
 use NitEnergy\event\JoinEvent;
 use NitEnergy\game\Debug\Debug;
 use NitEnergy\game\GameHandler;
@@ -32,6 +33,7 @@ class Main extends PluginBase implements Listener
         foreach ($listeners as $listener) {
             $server->getPluginManager()->registerEvents($listener, $this);
         }
+        $server->getCommandMap()->register("nitenergy", new EnergyCommand());
         $games = [
             "Debug" => Debug::class
         ];
