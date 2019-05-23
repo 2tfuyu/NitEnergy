@@ -2,6 +2,7 @@
 
 namespace NitEnergy\game;
 
+use pocketmine\event\Event;
 use pocketmine\Player;
 
 interface Game
@@ -27,6 +28,11 @@ interface Game
      * @return bool
      */
     public function removePlayer(Player $player): bool;
+
+    /**
+     * @param Event $e
+     */
+    public function onEvent(Event $e): void;
 
     public function start(): void;
 
