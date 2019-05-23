@@ -1,6 +1,6 @@
 <?php
 
-namespace NitEnergy\command;
+namespace NitEnergy\provider;
 
 use NitEnergy\provider\Provider;
 
