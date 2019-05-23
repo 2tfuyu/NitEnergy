@@ -8,6 +8,27 @@ class GameHandler
     /** @var array */
     private static $games = [];
 
+    /** @var array  */
+    private static $gameList = [];
+
+    /**
+     * @param string $name
+     * @param string $path
+     */
+    public static function registerGame(string $name, string $path): void
+    {
+        self::$gameList[$name] = $path;
+    }
+
+    /**
+     * @param string $name
+     * @return Game
+     */
+    public static function createGame(string $name): Game
+    {
+        return new self::$gameList[$name]();
+    }
+
     /**
      * @param Game $game
      * Create new Game instance.
@@ -41,5 +62,10 @@ class GameHandler
     public static function getGame(string $name): ?Game
     {
         return self::$games[$name];
+    }
+
+    public static function getGameList(): array
+    {
+        return self::$gameList;
     }
 }
