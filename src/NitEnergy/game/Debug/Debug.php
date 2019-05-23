@@ -20,7 +20,7 @@ use pocketmine\Server;
 
 class Debug extends Provider implements Game, Listener
 {
-    
+
     /** @var string  */
     const FILE_PATH = "%DATA_PATH%/Debug";
 
@@ -51,15 +51,18 @@ class Debug extends Provider implements Game, Listener
     /** @var array  */
     private $teams = [];
 
+    /** @var  */
+    private $setting = [];
+
     public function __construct(Main $plugin)
     {
         Server::getInstance()->getPluginManager()->registerEvents($this, $plugin);
         parent::__construct(self::FILE_PATH, self::FILE_NAME, null);
-        foreach (self::TEAM as $team)
-        {
+        foreach (self::TEAM as $team) {
             $this->teams[$team] = [];
         }
         $this->waitTask();
+        $this->setting = $this->get("setting");
     }
 
     public function waitTask(): void
@@ -67,8 +70,7 @@ class Debug extends Provider implements Game, Listener
         Main::_getScheduler()->scheduleDelayedTask(new ClosureTask(
             function (int $currentTick): void
             {
-                if (count($this->members) < count(self::TEAM))
-                {
+                if (count($this->members) < count(self::TEAM)) {
                     $this->waitTask();
                     return;
                 }
@@ -140,12 +142,10 @@ class Debug extends Provider implements Game, Listener
         $events["PlayerDeathEvent"] = function (PlayerDeathEvent $e): void
         {
             $player = $e->getPlayer();
-            if ($this->existsPlayer($player))
-            {
+            if ($this->existsPlayer($player)) {
                 $playerMember = MemberHandler::getMember($player);
                 $damageCause = $player->getLastDamageCause();
-                if (!$damageCause instanceof EntityDamageByEntityEvent)
-                {
+                if (!$damageCause instanceof EntityDamageByEntityEvent) {
                     $playerMember->respawn();
                     return;
                 }
@@ -162,11 +162,9 @@ class Debug extends Provider implements Game, Listener
         $events["EntityDamageEvent"] = function (EntityDamageEvent $e): void
         {
             $entity = $e->getEntity();
-            if ($entity instanceof Player)
-            {
+            if ($entity instanceof Player) {
                 $player = $entity;
-                if ($this->existsPlayer($player))
-                {
+                if ($this->existsPlayer($player)) {
                     $playerMember = MemberHandler::getMember($player);
                     if (!$e instanceof EntityDamageByEntityEvent) return;
 
@@ -174,8 +172,7 @@ class Debug extends Provider implements Game, Listener
                     if ($damager instanceof Player) return;
 
                     $damagerMember = MemberHandler::getMember($damager);
-                    if ($playerMember->getTeam() === $damagerMember->getTeam())
-                    {
+                    if ($playerMember->getTeam() === $damagerMember->getTeam()) {
                         $e->setCancelled();
                         return;
                     }
@@ -192,8 +189,7 @@ class Debug extends Provider implements Game, Listener
         $this->timerTask();
         $this->randomTeam();
 
-        foreach ($this->members as $member)
-        {
+        foreach ($this->members as $member) {
             $message = "You are " . $member->getTeam();
             GameLib::sendMessageToMember($message, $member);
         }
@@ -202,7 +198,11 @@ class Debug extends Provider implements Game, Listener
     public function finish(): void
     {
         $this->isStarted = false;
+    }
 
+    public function getSetting(): array
+    {
+        return $this->setting;
     }
 
     public function getName(): string

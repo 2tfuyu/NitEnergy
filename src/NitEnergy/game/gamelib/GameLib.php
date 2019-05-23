@@ -36,6 +36,10 @@ class GameLib
         }
     }
 
+    /**
+     * @param string $message
+     * @param Member $member
+     */
     public static function sendMessageToMember(string $message, Member $member): void
     {
         $member->getPlayer()->sendMessage($message);

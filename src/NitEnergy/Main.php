@@ -5,10 +5,10 @@ namespace NitEnergy;
 use NitEnergy\event\JoinEvent;
 use NitEnergy\game\Debug\Debug;
 use NitEnergy\game\GameHandler;
+use NitEnergy\game\OpenGameTask;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\TaskScheduler;
-use pocketmine\Server;
 
 class Main extends PluginBase implements Listener
 {
@@ -22,24 +22,23 @@ class Main extends PluginBase implements Listener
     {
         self::$path = $this->getDataFolder();
         self::$scheduler = $this->getScheduler();
-        if (!file_exists(self::$path))
-        {
+        if (!file_exists(self::$path)) {
             @mkdir(self::$path);
         }
         $listeners = [
             new JoinEvent()
         ];
-        $server = Server::getInstance();
-        foreach ($listeners as $listener){
+        $server = $this->getServer();
+        foreach ($listeners as $listener) {
             $server->getPluginManager()->registerEvents($listener, $this);
         }
         $games = [
             "Debug" => Debug::class
         ];
-        foreach ($games as $gameName => $path)
-        {
+        foreach ($games as $gameName => $path) {
             GameHandler::registerGame($gameName, $path);
         }
+        $this->getScheduler()->scheduleRepeatingTask(new OpenGameTask(), 20 * 1);
     }
 
     /**
