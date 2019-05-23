@@ -3,7 +3,6 @@
 namespace NitEnergy\game\Debug;
 
 use NitEnergy\game\Game;
-use NitEnergy\game\GameHandler;
 use NitEnergy\game\gamelib\GameLib;
 use NitEnergy\Main;
 use NitEnergy\member\Member;
