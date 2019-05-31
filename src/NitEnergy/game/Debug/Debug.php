@@ -3,6 +3,7 @@
 namespace NitEnergy\game\Debug;
 
 use NitEnergy\game\Game;
+use NitEnergy\game\GameHandler;
 use NitEnergy\game\gamelib\GameLib;
 use NitEnergy\Main;
 use NitEnergy\member\Member;
@@ -188,22 +189,72 @@ class Debug extends Provider implements Game, Listener
         $this->timerTask();
         $this->randomTeam();
 
-        foreach ($this->members as $member) {
+        $function = function (Member $member): void
+        {
             $message = "You are " . $member->getTeam();
             GameLib::sendMessageToMember($message, $member);
-        }
+        };
+        GameLib::processMembers($function, $this->members);
     }
 
     public function finish(): void
     {
         $this->isStarted = false;
+
+        $winner = GameLib::getKillWinnerTeam($this->teams);
+        $achirve = [
+            "game" => self::GAME_NAME,
+            "date" => date("Y/m/d H:i:s"),
+            "teams" => self::TEAM,
+            "winner" => $winner
+        ];
+        $function = function (array $team, Member $member) use($winner, $achirve): void
+        {
+            if (key($team) === $winner) {
+                GameLib::sendMessageToMember("You Win!", $member);
+                $function = function (Member $member) use($winner, $achirve): void
+                {
+                    $name = $member->getName();
+                    $win = $member->getNested($name . ".win");
+                    $member->setNested($name . ".win", ++$win);
+
+                    $achirveData = $member->getNested($name . ".achirve");
+                    $achirveData[] = $achirve;
+                    $member->setNested($name . ".achirve", $achirveData);
+                };
+            }
+            else {
+                GameLib::sendMessageToMember("You Lose!", $member);
+                $function = function (Member $member) use($winner, $achirve): void
+                {
+                    $name = $member->getName();
+                    $lose = $member->getNested($name . ".lose");
+                    $member->setNested($name . ".lose", ++$lose);
+
+                    $achirveData = $member->getNested($name . ".achirve");
+                    $achirveData[] = $achirve;
+                    $member->setNested($name . ".achirve", $achirveData);
+                };
+            }
+            $member->processAchievement($function);
+        };
+        GameLib::processTeam($function, $this->teams);
+        GameHandler::close($this);
     }
 
+    /**
+     * @return array
+     * Get this game`s setting.
+     */
     public function getSetting(): array
     {
         return $this->setting;
     }
 
+    /**
+     * @return string
+     * Get game name.
+     */
     public function getName(): string
     {
         return self::GAME_NAME;
