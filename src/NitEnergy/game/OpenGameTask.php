@@ -12,8 +12,8 @@ class OpenGameTask extends Task
         $gameList = GameHandler::getGameList();
         foreach ($gameList as $gameName) {
             $game = GameHandler::getGame($gameName);
-            if (!$game === null) {
-                GameHandler::open(GameHandler::createGame($game));
+            if ($game === null) {
+                GameHandler::open(GameHandler::createGame($gameName));
             }
         }
     }
