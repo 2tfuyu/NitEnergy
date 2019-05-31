@@ -17,7 +17,13 @@ class Main extends PluginBase implements Listener
     /** @var $path */
     private static $path;
 
+    /** @var TaskScheduler */
     private static $scheduler;
+
+    public function onLoad(): void
+    {
+        date_default_timezone_set('Asia/Tokyo');
+    }
 
     public function onEnable(): void
     {
