@@ -2,6 +2,8 @@
 
 namespace NitEnergy\member;
 
+use NitEnergy\game\GameHandler;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 
 class Member
@@ -27,9 +29,16 @@ class Member
         $this->player = $player;
     }
 
+    /**
+     * Teleport player to player`s team position.
+     */
     public function respawn(): void
     {
-        // Gameのセッティングデータからリスポーン座標を取得する
+        $game = GameHandler::getGame($this->getGameName());
+        $setting = $game->getSetting()[$this->team];
+        $respawn = $setting["respawn"];
+        $vector = new Vector3($respawn["x"], $respawn["y"], $respawn["z"]);
+        $this->player->teleport($vector, $respawn["level"]);
     }
 
     /**
