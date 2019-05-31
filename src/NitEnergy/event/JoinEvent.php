@@ -61,6 +61,5 @@ class JoinEvent extends Provider implements Listener, PlayerData
      */
     public function removeAccount(Player $player): void
     {
-        // TODO: Implement removeAccount() method.
     }
 }
