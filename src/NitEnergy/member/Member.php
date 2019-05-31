@@ -3,11 +3,19 @@
 namespace NitEnergy\member;
 
 use NitEnergy\game\GameHandler;
+use NitEnergy\provider\PlayerData;
+use NitEnergy\provider\Provider;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
 
-class Member
+class Member extends Provider implements PlayerData
 {
+
+    /** @var string  */
+    const FILE_PATH = "%DATA_PATH%/Player";
+
+    /** @var string  */
+    const FILE_NAME = "Player.yml";
 
     /** @var Player  */
     private $player;
@@ -26,6 +34,7 @@ class Member
 
     public function __construct(Player $player)
     {
+        parent::__construct(self::FILE_PATH, self::FILE_NAME, null);
         $this->player = $player;
     }
 
@@ -84,6 +93,23 @@ class Member
     }
 
     /**
+     * @param callable|null $function
+     */
+    public function processAchievement(?callable $function = null): void
+    {
+        if (!$function === null) {
+            $function($this);
+        }
+        $kill = $this->get($this->getName() . ".kill");
+        $kill += $this->getKill();
+        $this->setNested($this->getName() . ".kill", $kill);
+
+        $death = $this->get($this->getName() . ".death");
+        $death += $this->getDeath();
+        $this->setNested($this->getName() . ".death", $death);
+    }
+
+    /**
      * @param string $name
      */
     public function setGameName(string $name): void
@@ -113,5 +139,29 @@ class Member
     public function getName(): string
     {
         return $this->player->getName();
+    }
+
+    /**
+     * @param Player $player
+     * @return bool
+     * Check the account existence.
+     */
+    public function existsAccount(Player $player): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param Player $player
+     */
+    public function createAccount(Player $player): void
+    {
+    }
+
+    /**
+     * @param Player $player
+     */
+    public function removeAccount(Player $player): void
+    {
     }
 }
