@@ -12,7 +12,7 @@ class GameLib
      * @param array $teams
      * Send message to All Team`s member.
      */
-    public static function sendMessageToTeams(string $message, array $teams): void
+    public static function sendMessageToMembers(string $message, array $teams): void
     {
         foreach ($teams as $team)
         {
@@ -30,8 +30,7 @@ class GameLib
      */
     public static function sendMessageToTeam(string $message, array $team): void
     {
-        foreach ($team as $member)
-        {
+        foreach ($team as $member) {
             $member->getPlayer()->sendMessage($message);
         }
     }
@@ -43,6 +42,39 @@ class GameLib
     public static function sendMessageToMember(string $message, Member $member): void
     {
         $member->getPlayer()->sendMessage($message);
+    }
+
+    /**
+     * @param callable $function
+     * @param array $teams
+     */
+    public static function processMembers(callable $function, array $teams): void
+    {
+        foreach ($teams as $team) {
+            foreach ($team as $member) {
+                $function($member);
+            }
+        }
+    }
+
+    /**
+     * @param callable $function
+     * @param array $team
+     */
+    public static function processTeam(callable $function, array $team): void
+    {
+        foreach ($team as $member) {
+            $function($member);
+        }
+    }
+
+    public static function processTeams(callable $function, array $teams): void
+    {
+        foreach ($teams as $team) {
+            foreach ($team as $member) {
+                $function($team, $member);
+            }
+        }
     }
 
     /**
