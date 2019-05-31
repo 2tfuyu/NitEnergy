@@ -39,6 +39,11 @@ interface Game
     public function finish(): void;
 
     /**
+     * @return array
+     */
+    public function getSetting(): array;
+
+    /**
      * @return string
      * Return game`s name.
      */
