@@ -32,6 +32,25 @@ abstract class Provider
 
     /**
      * @param string $key
+     * @param null $default
+     * @return mixed
+     */
+    public function getNested(string $key, $default = null)
+    {
+        return $this->config->getNested($key, $default);
+    }
+
+    /**
+     * @param string $key
+     * @param null $default
+     */
+    public function setNested(string $key, $default = null)
+    {
+        $this->config->setNested($key, $default);
+    }
+
+    /**
+     * @param string $key
      * @return array
      */
     public function get(string $key): array
