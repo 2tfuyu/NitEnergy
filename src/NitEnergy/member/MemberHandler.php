@@ -25,6 +25,16 @@ class MemberHandler
     }
 
     /**
+     * @param array $members
+     */
+    public static function removeMembers(array $members): void
+    {
+        foreach ($members as $member) {
+            unset(self::$members[$member->getName()]);
+        }
+    }
+
+    /**
      * @param string $name
      * @return bool
      */
