@@ -216,6 +216,10 @@ class Debug extends Provider implements Game, Listener
         ];
         $function = function (array $team, Member $member) use($winner, $achirve): void
         {
+            $achirveData = $member->getNested($member->getName() . ".achirve");
+            $achirveData[] = $achirve;
+            $member->setNested($member->getName() . ".achirve", $achirveData);
+
             if (key($team) === $winner) {
                 GameLib::sendMessageToMember("You Win!", $member);
                 $function = function (Member $member) use($winner, $achirve): void
@@ -223,10 +227,6 @@ class Debug extends Provider implements Game, Listener
                     $name = $member->getName();
                     $win = $member->getNested($name . ".win");
                     $member->setNested($name . ".win", ++$win);
-
-                    $achirveData = $member->getNested($name . ".achirve");
-                    $achirveData[] = $achirve;
-                    $member->setNested($name . ".achirve", $achirveData);
                 };
             }
             else {
@@ -236,10 +236,6 @@ class Debug extends Provider implements Game, Listener
                     $name = $member->getName();
                     $lose = $member->getNested($name . ".lose");
                     $member->setNested($name . ".lose", ++$lose);
-
-                    $achirveData = $member->getNested($name . ".achirve");
-                    $achirveData[] = $achirve;
-                    $member->setNested($name . ".achirve", $achirveData);
                 };
             }
             $member->processAchievement($function);
