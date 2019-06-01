@@ -5,3 +5,9 @@ settings:
       y: 100
       z: 100
       level: Debug
+  red:
+    respawn:
+      x: 100
+      y: 100
+      z: 100
+      level: Debug
