@@ -241,6 +241,7 @@ class Debug extends Provider implements Game, Listener
             $member->processAchievement($function);
         };
         GameLib::processTeam($function, $this->teams);
+        MemberHandler::removeMembers($this->members);
         GameHandler::close($this);
     }
 
