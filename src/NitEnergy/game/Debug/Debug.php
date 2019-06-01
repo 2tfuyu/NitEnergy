@@ -51,18 +51,22 @@ class Debug extends Provider implements Game, Listener
     /** @var array  */
     private $teams = [];
 
-    /** @var  */
+    /** @var array */
     private $setting = [];
+
+    /** @var array */
+    private $events;
 
     public function __construct(Main $plugin)
     {
-        Server::getInstance()->getPluginManager()->registerEvents($this, $plugin);
         parent::__construct(self::FILE_PATH, self::FILE_NAME, null);
         foreach (self::TEAM as $team) {
             $this->teams[$team] = [];
         }
-        $this->waitTask();
         $this->setting = $this->get("setting");
+        $this->waitTask();
+        $this->setEvents();
+        Server::getInstance()->getPluginManager()->registerEvents($this, $plugin);
     }
 
     public function waitTask(): void
@@ -137,7 +141,11 @@ class Debug extends Provider implements Game, Listener
      */
     public function onEvent(Event $e): void
     {
-        /** @var array $events */
+        $this->events[$e->getEventName()]($e);
+    }
+
+    public function setEvents(): void
+    {
         $events = [];
         $events["PlayerDeathEvent"] = function (PlayerDeathEvent $e): void
         {
@@ -158,7 +166,6 @@ class Debug extends Provider implements Game, Listener
                 $damagerMember->addKill();
             }
         };
-
         $events["EntityDamageEvent"] = function (EntityDamageEvent $e): void
         {
             $entity = $e->getEntity();
@@ -179,8 +186,7 @@ class Debug extends Provider implements Game, Listener
                 }
             }
         };
-
-        $events[$e->getEventName()]($e);
+        $this->events = $events;
     }
 
     public function start(): void
