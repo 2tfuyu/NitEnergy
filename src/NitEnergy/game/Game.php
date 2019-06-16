@@ -30,13 +30,24 @@ interface Game
     public function removePlayer(Player $player): bool;
 
     /**
+     * @param Player $player
+     * @return bool
+     */
+    public function existsPlayer(Player $player): bool;
+
+    /**
      * @param Event $e
      */
     public function onEvent(Event $e): void;
 
+    public function setEvents(): void;
+
     public function start(): void;
 
-    public function finish(): void;
+    /**
+     * @param bool $normal
+     */
+    public function finish(bool $normal = true): void;
 
     /**
      * @return array
