@@ -14,6 +14,7 @@ use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerDeathEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
 use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
@@ -123,6 +124,7 @@ class Debug extends Provider implements Game, Listener
         if ($this->isStarted) {
             return false;
         }
+        MemberHandler::removeMember($player->getName());
         unset($this->members[$player->getName()]);
         return true;
     }
@@ -186,6 +188,22 @@ class Debug extends Provider implements Game, Listener
                 }
             }
         };
+        $events["PlayerQuitEvent"] = function (PlayerQuitEvent $e): void
+        {
+            $player = $e->getPlayer();
+            $name = $player->getName();
+            if (MemberHandler::existsMember($name)) {
+                $member_player = MemberHandler::getMember($name);
+                $game_name = $member_player->getGameName();
+                if ($game_name === self::GAME_NAME) {
+                    $team_name = $member_player->getTeam();
+                    if (count($this->teams[$team_name]) < 1) {
+                        $this->finish(false);
+                    }
+                    MemberHandler::removeMember($name);
+                }
+            }
+        };
         $this->events = $events;
     }
 
@@ -203,44 +221,48 @@ class Debug extends Provider implements Game, Listener
         GameLib::processMembers($function, $this->members);
     }
 
-    public function finish(): void
+    /**
+     * @param bool $normal
+     */
+    public function finish(bool $normal = true): void
     {
+        if (!$normal) {
+            GameLib::sendMessageToMembers("異常が発生したためゲームを終了しました。", $this->members);
+        }
+        else {
+            $winner = GameLib::getKillWinnerTeam($this->teams);
+            $achirve = [
+                "game" => self::GAME_NAME,
+                "date" => date("Y/m/d H:i:s"),
+                "teams" => self::TEAM,
+                "winner" => $winner
+            ];
+            $function = function (array $team, Member $member) use($winner, $achirve): void {
+                $achirveData = $member->getNested($member->getName() . ".achirve");
+                $achirveData[] = $achirve;
+                $member->setNested($member->getName() . ".achirve", $achirveData);
+
+                if (key($team) === $winner) {
+                    GameLib::sendMessageToMember("You Win!", $member);
+                    $function = function (Member $member) use ($winner, $achirve): void {
+                        $name = $member->getName();
+                        $win = $member->getNested($name . ".win");
+                        $member->setNested($name . ".win", ++$win);
+                    };
+                }
+                else {
+                    GameLib::sendMessageToMember("You Lose!", $member);
+                    $function = function (Member $member) use ($winner, $achirve): void {
+                        $name = $member->getName();
+                        $lose = $member->getNested($name . ".lose");
+                        $member->setNested($name . ".lose", ++$lose);
+                    };
+                }
+                $member->processAchievement($function);
+            };
+            GameLib::processTeam($function, $this->teams);
+        }
         $this->isStarted = false;
-
-        $winner = GameLib::getKillWinnerTeam($this->teams);
-        $achirve = [
-            "game" => self::GAME_NAME,
-            "date" => date("Y/m/d H:i:s"),
-            "teams" => self::TEAM,
-            "winner" => $winner
-        ];
-        $function = function (array $team, Member $member) use($winner, $achirve): void
-        {
-            $achirveData = $member->getNested($member->getName() . ".achirve");
-            $achirveData[] = $achirve;
-            $member->setNested($member->getName() . ".achirve", $achirveData);
-
-            if (key($team) === $winner) {
-                GameLib::sendMessageToMember("You Win!", $member);
-                $function = function (Member $member) use($winner, $achirve): void
-                {
-                    $name = $member->getName();
-                    $win = $member->getNested($name . ".win");
-                    $member->setNested($name . ".win", ++$win);
-                };
-            }
-            else {
-                GameLib::sendMessageToMember("You Lose!", $member);
-                $function = function (Member $member) use($winner, $achirve): void
-                {
-                    $name = $member->getName();
-                    $lose = $member->getNested($name . ".lose");
-                    $member->setNested($name . ".lose", ++$lose);
-                };
-            }
-            $member->processAchievement($function);
-        };
-        GameLib::processTeam($function, $this->teams);
         MemberHandler::removeMembers($this->members);
         GameHandler::close($this);
     }
