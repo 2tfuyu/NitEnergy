@@ -7,9 +7,6 @@ use NitEnergy\Main;
 use NitEnergy\member\Member;
 use NitEnergy\member\MemberHandler;
 use NitEnergy\provider\Provider;
-use pocketmine\block\BlockIds;
-use pocketmine\block\utils\ColorBlockMetaHelper;
-use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Event;
@@ -18,9 +15,8 @@ use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
 use pocketmine\scheduler\ClosureTask;
-use pocketmine\Server;
 
-class CTW extends Provider implements Game, Listener
+class Flag extends Provider implements Game, Listener
 {
 
     /** @var string  */
@@ -61,27 +57,6 @@ class CTW extends Provider implements Game, Listener
 
     /** @var array  */
     private $woolCond = [];
-
-    /** @var string */
-    private $winner;
-
-    public function __construct(Main $plugin)
-    {
-        parent::__construct(self::FILE_PATH, self::FILE_NAME, null);
-        foreach (self::TEAM as $team) {
-            $this->teams[$team] = [];
-        }
-        $this->setting = $this->get("setting");
-        foreach ($this->setting as $setting) {
-            $this->woolCond[key($setting)] = [];
-            foreach ($setting["wools"] as $wool) {
-                $this->woolCond[key($setting)][$wool] = false;
-            }
-        }
-        $this->waitTask();
-        $this->setEvents();
-        Server::getInstance()->getPluginManager()->registerEvents($this, $plugin);
-    }
 
     public function waitTask(): void
     {
@@ -164,29 +139,6 @@ class CTW extends Provider implements Game, Listener
 
     public function setEvents(): void
     {
-        $events = [];
-        $events["BlockPlacceEvent"] = function (BlockPlaceEvent $e): void
-        {
-            $player = $e->getPlayer();
-            if (MemberHandler::existsMember($player->getName())) {
-                $block = $e->getBlock();
-                if ($block->getId() === BlockIds::WOOL) {
-                    $meta = $block->getVariant();
-                    $member = MemberHandler::getMember($player->getName());
-                    $teamWool = GameLib::isTeamWool($this->setting[$member->getTeam()]["wools"], $meta);
-                    if ($teamWool != null) {
-                        if (GameLib::isWoolPlace($this->setting[$member->getTeam()]["wool"], $block)) {
-                            $wool_name = ColorBlockMetaHelper::getColorFromMeta($meta);
-                            $this->woolCond[$member->getTeam()]["wools"][$wool_name] = true;
-                            if (GameLib::isAllWoolPlaced($this->woolCond[$member->getTeam()]["wool"])) {
-                                $this->winner = $member->getTeam();
-                                $this->finish();
-                            }
-                        }
-                    }
-                }
-            }
-        };
         $events["PlayerDeathEvent"] = function (PlayerDeathEvent $e): void
         {
             $player = $e->getPlayer();
@@ -250,13 +202,6 @@ class CTW extends Provider implements Game, Listener
         $this->isStarted = true;
         $this->timerTask();
         $this->randomTeam();
-
-        $function = function (Member $member): void
-        {
-            $message = "You are " . $member->getTeam();
-            GameLib::sendMessageToMember($message, $member);
-        };
-        GameLib::processMembers($function, $this->members);
     }
 
     /**
@@ -264,45 +209,7 @@ class CTW extends Provider implements Game, Listener
      */
     public function finish(bool $normal = true): void
     {
-        if (!$normal) {
-            GameLib::sendMessageToMembers("異常が発生したためゲームを終了しました。", $this->members);
-        }
-        else {
-            $winner = $this->winner;
-            $achirve = [
-                "game" => self::GAME_NAME,
-                "date" => date("Y/m/d H:i:s"),
-                "teams" => self::TEAM,
-                "winner" => $winner
-            ];
-            $function = function (array $team, Member $member) use($winner, $achirve): void {
-                $achirveData = $member->getNested($member->getName() . ".achirve");
-                $achirveData[] = $achirve;
-                $member->setNested($member->getName() . ".achirve", $achirveData);
-
-                if (key($team) === $winner) {
-                    GameLib::sendMessageToMember("You Win!", $member);
-                    $function = function (Member $member) use ($winner, $achirve): void {
-                        $name = $member->getName();
-                        $win = $member->getNested($name . ".win");
-                        $member->setNested($name . ".win", ++$win);
-                    };
-                }
-                else {
-                    GameLib::sendMessageToMember("You Lose!", $member);
-                    $function = function (Member $member) use ($winner, $achirve): void {
-                        $name = $member->getName();
-                        $lose = $member->getNested($name . ".lose");
-                        $member->setNested($name . ".lose", ++$lose);
-                    };
-                }
-                $member->processAchievement($function);
-            };
-            GameLib::processTeam($function, $this->teams);
-        }
-        $this->isStarted = false;
-        MemberHandler::removeMembers($this->members);
-        GameHandler::close($this);
+        // TODO: Implement finish() method.
     }
 
     /**

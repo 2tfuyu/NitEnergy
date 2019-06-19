@@ -125,6 +125,10 @@ class GameLib
         );
     }
 
+    /**
+     * @param array $wools
+     * @return bool
+     */
     public static function isAllWoolPlaced(array $wools): bool
     {
         foreach ($wools as $wool) {
